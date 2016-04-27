@@ -1,12 +1,16 @@
 {
   "name": "eslint-plugin-const-immutable",
-  "version": "0.0.0",
-  "description": "Force const declarations to be immutable",
+  "version": "1.0.0",
+  "description": "Treat const declarations as immutable",
   "keywords": [
     "eslint",
     "eslintplugin",
     "eslint-plugin"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zeronone/eslint-plugin-const-immutable"
+  },
   "author": "Arif Rezai",
   "main": "lib/index.js",
   "scripts": {
@@ -21,5 +25,5 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "license": "ISC"
+  "license": "MIT"
 }
