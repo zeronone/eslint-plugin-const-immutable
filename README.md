@@ -43,8 +43,6 @@ Then configure the rules you want to use under the rules section.
 
 ## Supported Rules
 
-* Fill in provided rules here
-
 ### no-mutation
 
 This rule forces the variables declared with `const` to remain immutable. The following code are considered problematic.
