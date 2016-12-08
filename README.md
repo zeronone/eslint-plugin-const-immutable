@@ -1,8 +1,8 @@
 # eslint-plugin-const-immutable
 
 This plugin forces all `const` declarations to be immutable. Ecmascript 6 don't
-allow variables declared with `const` to be rassigned, but doesn't necassarilly
-avoid mutation.
+allow variables declared with `const` to be reassigned, but doesn't necassarilly
+avoid mutation to the strucutures the respective variable is pointing to.
 
 ## Installation
 
@@ -72,6 +72,11 @@ function foo() {
 const obj = { a: '1', b: '2' };
 const {a,b} = obj;
 a += 1;            // error
+```
+
+```js
+const obj = { a: '1' };
+delete obj.a;     // error
 ```
 
 ### Sample Configuration File

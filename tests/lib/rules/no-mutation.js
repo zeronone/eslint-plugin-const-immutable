@@ -20,7 +20,7 @@ var rule = require("../../../lib/rules/no-mutation"),
 var ruleTester = new RuleTester();
 ruleTester.run("no-mutation", rule, {
 
-    valid: [
+    valid2: [
         { code: 'const x = {foo: {baz: "bar"}}; () => { var x = {a: "foo"}; x.a = 34; }', parserOptions: { ecmaVersion: 6 }},
         { code: 'const x = {foo: {baz: "bar"}}; () => { var x = 1; x = 34; }', parserOptions: { ecmaVersion: 6 }},
         { code: '() => { const x = {foo: {baz: "bar"}}; () => { var x = {a: "foo"}; x.a = 34; }}', parserOptions: { ecmaVersion: 6 }},
@@ -31,7 +31,29 @@ ruleTester.run("no-mutation", rule, {
         { code: 'const a = 1; const b = a + 1; const c = a + b + 1;', parserOptions: { ecmaVersion: 6 }},
     ],
 
+    valid: [],
     invalid: [
+        {
+            code: 'const x = {foo: "a"}; delete x.foo;',
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                {
+                    message: "'x' is constant, modification is not allowed.", type: "Identifier"
+                }
+            ]
+        },
+        {
+            code: 'const x = {foo: { bar: "a"}}; delete x.foo.bar;',
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                {
+                    message: "'x' is constant, modification is not allowed.", type: "Identifier"
+                }
+            ]
+        },
+    ],
+
+    invalid2: [
         { code: 'const x = {foo: {baz: "bar"}}; x.foo.baz = []; () => { var x = "foo"; x = 34; }',
             parserOptions: { ecmaVersion: 6 },
             errors: [{message: "'x' is constant, modification is not allowed.", type: "Identifier" }]
@@ -71,6 +93,6 @@ ruleTester.run("no-mutation", rule, {
             parserOptions: { ecmaVersion: 6 },
             errors: [{message: "'foo' is constant, modification is not allowed.", type: "Identifier" }]
         },
-        
+
     ]
 });
