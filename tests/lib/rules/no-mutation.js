@@ -20,7 +20,7 @@ var rule = require("../../../lib/rules/no-mutation"),
 var ruleTester = new RuleTester();
 ruleTester.run("no-mutation", rule, {
 
-    valid2: [
+    valid: [
         { code: 'const x = {foo: {baz: "bar"}}; () => { var x = {a: "foo"}; x.a = 34; }', parserOptions: { ecmaVersion: 6 }},
         { code: 'const x = {foo: {baz: "bar"}}; () => { var x = 1; x = 34; }', parserOptions: { ecmaVersion: 6 }},
         { code: '() => { const x = {foo: {baz: "bar"}}; () => { var x = {a: "foo"}; x.a = 34; }}', parserOptions: { ecmaVersion: 6 }},
@@ -29,9 +29,15 @@ ruleTester.run("no-mutation", rule, {
         { code: 'var foo = {a:"a", b:"b"}; var {a,b} = foo; a = a + 1;', parserOptions: { ecmaVersion: 6 }},
         { code: 'var foo = {a:"a", b:"b"}; let {a,b} = foo; a = a + 1;', parserOptions: { ecmaVersion: 6 }},
         { code: 'const a = 1; const b = a + 1; const c = a + b + 1;', parserOptions: { ecmaVersion: 6 }},
+        { code: 'const a = {}; Object.assign({}, a);', parserOptions: { ecmaVersion: 6 }},
+        { code: 'Object.assign({});', parserOptions: { ecmaVersion: 6 }},
+        { code: 'Object.assign({});', parserOptions: { ecmaVersion: 6 }},
+        { code: 'var a = {}; Object.assign(a, {});', parserOptions: { ecmaVersion: 6 }},
+        { code: 'let a = {}; Object.assign(a, {});', parserOptions: { ecmaVersion: 6 }},
+        { code: 'let a = {}; Object.assign(a);', parserOptions: { ecmaVersion: 6 }},
+        { code: 'var a = {}; Object.assign(a);', parserOptions: { ecmaVersion: 6 }},
     ],
 
-    valid: [],
     invalid: [
         {
             code: 'const x = {foo: "a"}; delete x.foo;',
@@ -51,9 +57,15 @@ ruleTester.run("no-mutation", rule, {
                 }
             ]
         },
-    ],
-
-    invalid2: [
+        {
+            code: 'const x = {}; Object.assign(x, {});',
+            parserOptions: { ecmaVersion: 6 },
+            errors: [
+                {
+                    message: "'x' is constant, modification is not allowed.", type: "Identifier"
+                }
+            ]
+        },
         { code: 'const x = {foo: {baz: "bar"}}; x.foo.baz = []; () => { var x = "foo"; x = 34; }',
             parserOptions: { ecmaVersion: 6 },
             errors: [{message: "'x' is constant, modification is not allowed.", type: "Identifier" }]

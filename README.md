@@ -79,6 +79,11 @@ const obj = { a: '1' };
 delete obj.a;     // error
 ```
 
+```js
+const obj = { a: '1' };
+Object.assign(obj, {a: '2'});     // error
+```
+
 ### Sample Configuration File
 ```json
 {
